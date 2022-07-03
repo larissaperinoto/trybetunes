@@ -10,8 +10,8 @@ class CardAlbum extends React.Component {
       <div>
         {`Resultado de álbuns de: ${search}`}
         {
-          data.map((album, index) => (
-            <div key={ index }>
+          data.map((album) => (
+            <div key={ album.collectionId }>
               <img src={ album.artworkUrl100 } alt="Capa do Album" />
               <h2>{ album.collectionName }</h2>
               <h3>{ album.artistName }</h3>
