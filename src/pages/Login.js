@@ -1,6 +1,6 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-import Loading from './Loading';
+import Loading from '../components/Loading';
 import * as userAPI from '../services/userAPI';
 
 class Login extends React.Component {
