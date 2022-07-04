@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import MusicCard from '../components/MusicCard';
 import getMusics from '../services/musicsAPI';
-import { addSong } from '../services/favoriteSongsAPI';
+import { addSong, getFavoriteSongs } from '../services/favoriteSongsAPI';
 import Loading from '../components/Loading';
 
 class Album extends React.Component {
@@ -14,11 +14,13 @@ class Album extends React.Component {
       musics: [],
       infos: {},
       isLoading: false,
+      listFavoriteSongs: [],
     };
   }
 
   componentDidMount() {
     this.handleApi();
+    this.handleReloadFavoriteSongs();
   }
 
   handleApi = async () => {
@@ -28,15 +30,20 @@ class Album extends React.Component {
     this.setState({ musics, infos });
   }
 
-  handleFavoriteSong = async () => {
-    const { musics } = this.state;
+  handleFavoriteSong = async (music) => {
     this.setState({ isLoading: true });
-    await addSong(musics);
+    await addSong(music);
     this.setState({ isLoading: false });
   }
 
+  handleReloadFavoriteSongs = async () => {
+    this.setState({ isLoading: true });
+    const listFavoriteSongs = await getFavoriteSongs();
+    this.setState({ isLoading: false, listFavoriteSongs });
+  }
+
   render() {
-    const { infos, musics, isLoading } = this.state;
+    const { infos, musics, isLoading, listFavoriteSongs } = this.state;
     const { artistName, collectionName, artworkUrl100 } = infos;
     return (
       <div data-testid="page-album">
@@ -55,6 +62,7 @@ class Album extends React.Component {
                   music={ music }
                   key={ music.trackId }
                   handleFavoriteSong={ this.handleFavoriteSong }
+                  listFavoriteSongs={ listFavoriteSongs }
                 />))
           }
         </ul>
