@@ -20,6 +20,7 @@ class MusicCard extends Component {
             <input
               data-testid={ `checkbox-music-${music.trackId}` }
               name="checkbox-music"
+              id="checkbox-music"
               type="checkbox"
               onChange={ (event) => handleChange(music, event) }
               checked={ checked }
