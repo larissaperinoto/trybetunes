@@ -1,44 +1,48 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Header from '../components/Header';
-import { getFavoriteSongs } from '../services/favoriteSongsAPI';
+import { getFavoriteSongs, removeSong } from '../services/favoriteSongsAPI';
 import Loading from '../components/Loading';
 import MusicCard from '../components/MusicCard';
 
-class Favorites extends React.Component {
+class Favorites extends Component {
   constructor() {
     super();
 
     this.state = {
-      isLoading: false,
+      isLoading: true,
       listFavoriteSongs: [],
     };
   }
 
   componentDidMount() {
-    this.importFavoritesSongs();
+    this.reloadFavoritesSongs();
   }
 
-  importFavoritesSongs = async () => {
-    this.setState({ isLoading: true });
+  reloadFavoritesSongs = async () => {
     const listFavoriteSongs = await getFavoriteSongs();
     this.setState({ isLoading: false, listFavoriteSongs });
   }
 
+  changeFavoriteSong = async (music) => {
+    this.setState({ isLoading: true });
+    await removeSong(music);
+    this.reloadFavoritesSongs();
+  }
+
   render() {
     const { isLoading, listFavoriteSongs } = this.state;
+    const checked = true;
     return (
       <div data-testid="page-favorites">
         <Header />
         <ul>
-          <li>
-            { isLoading && <Loading /> }
-            {
-              listFavoriteSongs.map((song) => (<MusicCard
-                music={ song }
-                key={ song.trackId }
-              />))
-            }
-          </li>
+          { isLoading ? <Loading /> : (listFavoriteSongs.map((music) => (
+            <MusicCard
+              music={ music }
+              key={ music.trackId }
+              handleChange={ this.changeFavoriteSong }
+              checked={ checked }
+            />))) }
         </ul>
       </div>
     );
