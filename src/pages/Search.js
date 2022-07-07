@@ -9,31 +9,39 @@ class Search extends Component {
     super();
 
     this.state = {
-      habilityButton: true,
+      isDisabled: true,
       isLoading: false,
       clean: false,
       data: [],
+      search: '',
+      saveSearch: '',
     };
   }
 
-  handleButtonSearch = ({ target: { value } }) => {
-    const valueMin = 1;
-    if (value.length > valueMin) {
-      this.setState({ habilityButton: false, search: value });
+  verifyInput = () => {
+    const { search } = this.state;
+    const validate = 1;
+    if (search.length > validate) {
+      this.setState({ isDisabled: false });
     } else {
-      this.setState({ habilityButton: true });
+      this.setState({ isDisabled: true });
     }
   }
 
-  handleClick = async () => {
+  handleChange = ({ target: { value } }) => {
+    this.setState({ search: value }, () => this.verifyInput());
+  }
+
+  buttonClick = () => {
     const { search } = this.state;
-    this.setState({ isLoading: true, clear: true });
-    const data = await searchAlbumsAPI(search);
-    this.setState({ isLoading: false, data });
+    this.setState({ isLoading: true, saveSearch: search }, async () => {
+      const data = await searchAlbumsAPI(search);
+      this.setState({ isLoading: false, search: '', data });
+    });
   }
 
   render() {
-    const { habilityButton, search, data, isLoading, clear } = this.state;
+    const { isDisabled, search, data, isLoading } = this.state;
     return (
       <div data-testid="page-search">
         <Header />
@@ -41,17 +49,18 @@ class Search extends Component {
           <label htmlFor="search-artist-input">
             <input
               type="text"
+              id="search-artist-input"
               name="search-artist-input"
-              value={ clear ? '' : search }
+              value={ search }
               data-testid="search-artist-input"
-              onChange={ this.handleButtonSearch }
+              onChange={ (event) => this.handleChange(event) }
             />
           </label>
           <button
             type="button"
             data-testid="search-artist-button"
-            disabled={ habilityButton }
-            onClick={ this.handleClick }
+            disabled={ isDisabled }
+            onClick={ this.buttonClick }
           >
             Pesquisar
           </button>
@@ -60,7 +69,7 @@ class Search extends Component {
         <div>
           { isLoading && <Loading /> }
 
-          { (data.length > 0 && search !== '')
+          { data.length > 0
             ? <CardAlbum { ...this.state } />
             : <p>Nenhum álbum foi encontrado</p> }
 

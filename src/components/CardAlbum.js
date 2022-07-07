@@ -4,11 +4,11 @@ import PropTypes from 'prop-types';
 
 class CardAlbum extends Component {
   render() {
-    const { data, search } = this.props;
+    const { data, saveSearch } = this.props;
 
     return (
       <div>
-        {`Resultado de álbuns de: ${search}`}
+        {`Resultado de álbuns de: ${saveSearch}`}
         {
           data.map((album) => (
             <div key={ album.collectionId }>
@@ -29,7 +29,7 @@ class CardAlbum extends Component {
 }
 
 CardAlbum.propTypes = {
-  search: PropTypes.string.isRequired,
+  saveSearch: PropTypes.string.isRequired,
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
