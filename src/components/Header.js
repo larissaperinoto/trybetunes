@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Loading from './Loading';
 import * as userAPI from '../services/userAPI';
 
-class Header extends React.Component {
+class Header extends Component {
   constructor() {
     super();
 

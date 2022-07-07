@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import Loading from '../components/Loading';
 import * as userAPI from '../services/userAPI';
 
-class Login extends React.Component {
+class Login extends Component {
   constructor() {
     super();
 
@@ -38,6 +38,7 @@ class Login extends React.Component {
     const { habilityButton, isLoading, redirect } = this.state;
     return (
       <div data-testid="page-login">
+        { redirect && <Redirect to="/search" /> }
         {isLoading ? <Loading />
           : (
             <div>
@@ -58,7 +59,6 @@ class Login extends React.Component {
                 Entrar
               </button>
             </div>)}
-        { redirect && <Redirect to="/search" /> }
       </div>
     );
   }

@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-class CardAlbum extends React.Component {
+class CardAlbum extends Component {
   render() {
     const { data, search } = this.props;
 

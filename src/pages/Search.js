@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { Component } from 'react';
 import CardAlbum from '../components/CardAlbum';
 import Header from '../components/Header';
 import searchAlbumsAPI from '../services/searchAlbumsAPI';
 import Loading from '../components/Loading';
 
-class Search extends React.Component {
+class Search extends Component {
   constructor() {
     super();
 
