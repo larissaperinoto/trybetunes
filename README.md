@@ -8,7 +8,7 @@ A aplicação TrybeTunes funciona como uma aplicação de streaming de músicas,
 
 ### Tecnologias e Ferramentas
 
-O projeto foi desenvolvido utilizando a biblioteca [React](https://pt-br.reactjs.org/), utilizando o [React Router](https://reactrouter.com/) para criar as rotas da aplicação.
+O projeto foi desenvolvido utilizando a biblioteca [React](https://pt-br.reactjs.org/), utilizando o [React Router](https://reactrouter.com/) para criar as rotas da aplicação. Foi utilizada a [iTunes Search API](https://developer.apple.com/library/archive/documentation/AudioVideo/Conceptual/iTuneSearchAPI/index.html#//apple_ref/doc/uid/TP40017632-CH3-SW1) para a busca de músicas e álbums.
 
 ### Execução
 
